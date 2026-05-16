@@ -471,3 +471,29 @@ body.home-page .site-footer {
     max-height: 42vh;
   }
 }
+
+/* Home copyright mark replacing the former 01 marker */
+body.home-page .eyebrow {
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+
+/* Latest home refinement */
+body.home-page .dna-user-image,
+body.home-page .dna-mark {
+  width: min(495px, 96%);
+  max-height: min(78vh, 760px);
+}
+
+body.home-page .site-footer {
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  body.home-page .dna-user-image,
+  body.home-page .dna-mark {
+    width: min(300px, 76%);
+    max-height: 46vh;
+  }
+}
