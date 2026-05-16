@@ -1,0 +1,473 @@
+:root {
+  --bg: #fbfaf7;
+  --text: #111111;
+  --muted: #6f6f6f;
+  --line: #c9c5bd;
+  --soft: #efede8;
+  --max: 1440px;
+  --side: clamp(24px, 5vw, 88px);
+  --serif: "Times New Roman", "Times", serif;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-shell {
+  min-height: 100vh;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 40px var(--side);
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2vw, 30px);
+  letter-spacing: 0.02em;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 4vw, 64px);
+  font-size: 15px;
+}
+
+.nav a {
+  position: relative;
+  color: #191919;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 180ms ease;
+}
+
+.nav a:hover::after,
+.nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.home-main {
+  min-height: calc(100vh - 140px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.65fr);
+  align-items: center;
+  gap: clamp(48px, 9vw, 140px);
+}
+
+.hero-copy {
+  padding-top: 8vh;
+}
+
+.eyebrow {
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 42px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(64px, 9vw, 138px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.hero-title .dash {
+  display: inline-block;
+  width: clamp(60px, 8vw, 140px);
+  height: 1px;
+  background: var(--text);
+  vertical-align: middle;
+  margin-left: 0.2em;
+  transform: translateY(-0.08em);
+}
+
+.hero-subtitle {
+  font-family: var(--serif);
+  font-size: clamp(42px, 6vw, 92px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin: 0 0 42px;
+}
+
+.hero-line {
+  width: min(78%, 760px);
+  height: 1px;
+  background: var(--line);
+  margin: 0 0 32px;
+}
+
+.hero-statement {
+  font-family: var(--serif);
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  color: #2a2a2a;
+  margin: 0 0 18px;
+}
+
+.hero-statement p {
+  margin: 0;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+}
+
+.dna-mark {
+  width: min(300px, 80%);
+  opacity: 0.82;
+}
+
+.page-main {
+  padding: clamp(80px, 12vw, 150px) 0;
+}
+
+.page-kicker {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  margin: 0 0 28px;
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(54px, 7vw, 108px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  margin: 0 0 48px;
+}
+
+.page-intro {
+  max-width: 720px;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1.35;
+  color: #202020;
+  margin: 0 0 80px;
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.grid-item {
+  min-height: 220px;
+  padding: 32px 32px 48px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.grid-item:nth-child(odd) {
+  border-right: 1px solid var(--line);
+  padding-right: 48px;
+}
+
+.grid-item:nth-child(even) {
+  padding-left: 48px;
+}
+
+.grid-item .num {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 42px;
+}
+
+.grid-item h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 48px);
+  line-height: 1.05;
+  margin: 0 0 18px;
+}
+
+.grid-item p {
+  max-width: 480px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.journal-list {
+  max-width: 900px;
+  border-top: 1px solid var(--line);
+}
+
+.journal-entry {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 48px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.journal-entry time {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.journal-entry h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+.journal-entry p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.about-copy {
+  max-width: 860px;
+}
+
+.about-copy p {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1.4;
+  margin: 0 0 32px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .site-shell {
+    padding-top: 28px;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 14px;
+    font-size: 14px;
+  }
+
+  .home-main {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding-top: 64px;
+  }
+
+  .hero-copy {
+    padding-top: 0;
+  }
+
+  .hero-visual {
+    min-height: 360px;
+    justify-content: flex-start;
+  }
+
+  .dna-mark {
+    width: min(220px, 70%);
+  }
+
+  .grid-list {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-item,
+  .grid-item:nth-child(odd),
+  .grid-item:nth-child(even) {
+    border-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .journal-entry {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .site-footer {
+    flex-direction: column;
+  }
+}
+
+
+/* Updated home image: user's DnA artwork */
+.dna-user-image {
+  width: min(360px, 86%);
+  max-height: 72vh;
+  object-fit: contain;
+  opacity: 0.95;
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 900px) {
+  .dna-user-image {
+    width: min(260px, 72%);
+    max-height: 54vh;
+  }
+}
+
+
+.hero-caption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+
+/* Home page: fixed first-view composition, no scroll */
+body.home-page {
+  overflow: hidden;
+}
+
+body.home-page .site-shell {
+  height: 100vh;
+  min-height: 100vh;
+  padding-top: clamp(22px, 3vh, 40px);
+  padding-bottom: clamp(18px, 2.5vh, 32px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+body.home-page .site-header {
+  padding-bottom: clamp(18px, 2.4vh, 28px);
+}
+
+body.home-page .home-main {
+  min-height: 0;
+  height: 100%;
+  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.62fr);
+  align-items: center;
+  gap: clamp(32px, 7vw, 110px);
+  overflow: hidden;
+}
+
+body.home-page .hero-copy {
+  padding-top: 0;
+  transform: translateY(1vh);
+}
+
+body.home-page .eyebrow {
+  margin-bottom: clamp(20px, 3vh, 38px);
+}
+
+body.home-page .hero-title {
+  font-size: clamp(58px, 8vw, 118px);
+}
+
+body.home-page .hero-subtitle {
+  font-size: clamp(38px, 5.6vw, 78px);
+  margin-bottom: clamp(22px, 3vh, 34px);
+}
+
+body.home-page .hero-line {
+  margin-bottom: clamp(22px, 3vh, 30px);
+}
+
+body.home-page .hero-statement {
+  font-size: clamp(18px, 1.8vw, 25px);
+  line-height: 1.32;
+  margin-bottom: 14px;
+}
+
+body.home-page .hero-caption {
+  font-size: 13px;
+}
+
+body.home-page .hero-visual {
+  min-height: 0;
+  height: 100%;
+  align-items: center;
+}
+
+body.home-page .dna-user-image,
+body.home-page .dna-mark {
+  width: min(330px, 80%);
+  max-height: min(68vh, 650px);
+}
+
+body.home-page .site-footer {
+  padding-top: clamp(14px, 2vh, 22px);
+}
+
+@media (max-width: 900px) {
+  body.home-page {
+    overflow: auto;
+  }
+
+  body.home-page .site-shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  body.home-page .home-main {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding-top: 48px;
+  }
+
+  body.home-page .hero-visual {
+    min-height: 260px;
+  }
+
+  body.home-page .dna-user-image,
+  body.home-page .dna-mark {
+    width: min(220px, 68%);
+    max-height: 42vh;
+  }
+}
