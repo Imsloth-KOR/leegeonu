@@ -3,13 +3,382 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leegeonu — DnA</title>
-  <meta name="description" content="DnA — Digital and Analogue. Portfolio and archive by Leegeonu.">
-  <link rel="stylesheet" href="style.css">
+  <title>Leegeonu — Current Slice</title>
+  <meta name="description" content="Portfolio and archive by Leegeonu. A study of time, analogue traces, and digital possibilities.">
+
+  <style>
+    :root {
+      --bg: #090a0b;
+      --text: #f4f1ea;
+      --muted: rgba(244, 241, 234, 0.58);
+      --faint: rgba(244, 241, 234, 0.18);
+      --line: rgba(244, 241, 234, 0.32);
+      --bright: rgba(244, 241, 234, 0.92);
+      --side: clamp(24px, 4vw, 56px);
+      --serif: "Times New Roman", Times, serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow: hidden;
+    }
+
+    body {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 680px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.09), transparent 18%),
+        radial-gradient(circle at 22% 58%, rgba(255, 255, 255, 0.045), transparent 26%),
+        radial-gradient(circle at 78% 52%, rgba(255, 255, 255, 0.055), transparent 28%),
+        linear-gradient(90deg, #0a0b0c 0%, #101112 50%, #090a0b 100%);
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.22;
+      mask-image: radial-gradient(circle at 50% 55%, black 0%, transparent 72%);
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, transparent 0%, transparent 56%, rgba(0,0,0,0.42) 100%);
+    }
+
+    .site-header {
+      position: absolute;
+      top: 38px;
+      left: var(--side);
+      right: var(--side);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      font-size: clamp(18px, 1.6vw, 22px);
+      letter-spacing: -0.01em;
+      font-weight: 500;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 4vw, 64px);
+      font-size: 15px;
+    }
+
+    .nav a {
+      position: relative;
+      color: rgba(244, 241, 234, 0.88);
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 180ms ease;
+    }
+
+    .nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .time-field {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .current-slice {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      z-index: 4;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(244,241,234,0.16) 16%,
+        rgba(244,241,234,0.48) 43%,
+        rgba(244,241,234,0.92) 51%,
+        rgba(244,241,234,0.36) 62%,
+        transparent 100%
+      );
+      transform: translateX(-50%);
+      transition: left 500ms ease-out;
+    }
+
+    .current-dot {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      z-index: 6;
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(244,241,234,0.95);
+      border-radius: 50%;
+      background: rgba(9,10,11,0.92);
+      box-shadow:
+        0 0 18px rgba(244,241,234,0.28),
+        0 0 42px rgba(244,241,234,0.18);
+      transform: translate(-50%, -50%);
+      transition: left 500ms ease-out;
+    }
+
+    .current-dot::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(244,241,234,0.8);
+      transform: translate(-50%, -50%);
+    }
+
+    .past-copy,
+    .future-copy,
+    .now-copy {
+      position: absolute;
+      z-index: 7;
+      pointer-events: none;
+    }
+
+    .past-copy {
+      left: 16%;
+      top: 25%;
+    }
+
+    .future-copy {
+      right: 16%;
+      top: 25%;
+      text-align: right;
+    }
+
+    .now-copy {
+      left: 50%;
+      top: 71%;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+
+    .label {
+      margin: 0 0 12px;
+      font-size: 17px;
+      letter-spacing: 0.34em;
+      font-weight: 400;
+      color: var(--bright);
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .site-footer {
+      position: absolute;
+      left: var(--side);
+      right: var(--side);
+      bottom: 34px;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-left {
+      justify-self: start;
+    }
+
+    .footer-center {
+      justify-self: center;
+    }
+
+    .footer-right {
+      justify-self: end;
+    }
+
+    .mobile-hint {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      html,
+      body {
+        overflow: auto;
+      }
+
+      .page {
+        min-height: 100svh;
+        height: 100svh;
+      }
+
+      .site-header {
+        top: 26px;
+        left: 24px;
+        right: 24px;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .nav {
+        gap: 18px;
+        font-size: 13px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .current-slice {
+        left: 50%;
+        top: 18%;
+        bottom: 18%;
+        opacity: 0.9;
+      }
+
+      .current-dot {
+        left: 50%;
+        top: 50%;
+      }
+
+      .past-copy {
+        left: 24px;
+        top: 22%;
+      }
+
+      .future-copy {
+        right: 24px;
+        top: auto;
+        bottom: 23%;
+      }
+
+      .now-copy {
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .label {
+        font-size: 14px;
+        letter-spacing: 0.28em;
+      }
+
+      .sub {
+        font-size: 12px;
+      }
+
+      .site-footer {
+        left: 24px;
+        right: 24px;
+        bottom: 22px;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        font-size: 11.5px;
+      }
+
+      .footer-left,
+      .footer-center,
+      .footer-right {
+        justify-self: start;
+      }
+
+      .footer-center {
+        display: none;
+      }
+
+      .mobile-hint {
+        display: block;
+        color: rgba(244,241,234,0.42);
+        font-size: 11px;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav {
+        gap: 14px;
+        font-size: 12px;
+      }
+
+      .past-copy {
+        top: 24%;
+      }
+
+      .future-copy {
+        bottom: 25%;
+      }
+
+      .now-copy {
+        top: 51%;
+      }
+    }
+  </style>
 </head>
 
-<body class="home-page" oncontextmenu="return false;">
-  <div class="site-shell">
+<body oncontextmenu="return false;">
+  <div class="page" id="page">
     <header class="site-header">
       <a class="brand" href="index.html">Leegeonu</a>
 
@@ -21,35 +390,257 @@
       </nav>
     </header>
 
-    <main class="home-main">
-      <section class="hero-copy" aria-label="Home introduction">
-        <h1 class="hero-title">
-          DnA <span class="dash" aria-hidden="true"></span>
-        </h1>
+    <main class="time-field" aria-label="Interactive time field">
+      <canvas id="fieldCanvas"></canvas>
 
-        <p class="hero-subtitle">Digital and Analogue</p>
+      <div class="current-slice" id="slice"></div>
+      <div class="current-dot" id="dot"></div>
 
-        <div class="hero-line" aria-hidden="true"></div>
-
-        <div class="hero-statement">
-          <p>Digital opens possible futures.</p>
-          <p>Analogue carries accumulated time.</p>
-        </div>
+      <section class="past-copy" aria-label="Past">
+        <h1 class="label">PAST</h1>
+        <p class="sub">analogue<br>accumulated time</p>
       </section>
 
-      <section class="hero-visual" aria-label="DnA concept image">
-        <img
-          class="dna-mark dna-user-image"
-          src="dna-main.png"
-          alt="DnA concept image: digital data and botanical structure intertwined."
-        >
+      <section class="future-copy" aria-label="Future">
+        <h2 class="label">FUTURE</h2>
+        <p class="sub">digital<br>possible futures</p>
+      </section>
+
+      <section class="now-copy" aria-label="Now">
+        <h2 class="label">NOW</h2>
+        <p class="sub">current slice</p>
+        <p class="mobile-hint">scroll of time / touch of possibility</p>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>© 2016–Current. Leegeonu. All rights reserved.</span>
-      <span>Portfolio and archive by Leegeonu.</span>
+      <span class="footer-left">© 2016–Current. Geonu Lee. All rights reserved.</span>
+      <span class="footer-center">DnA — Digital and Analogue</span>
+      <span class="footer-right">Portfolio and archive by Leegeonu.</span>
     </footer>
   </div>
+
+  <script>
+    const canvas = document.getElementById("fieldCanvas");
+    const ctx = canvas.getContext("2d");
+    const page = document.getElementById("page");
+    const slice = document.getElementById("slice");
+    const dot = document.getElementById("dot");
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let pointerX = 0.5;
+    let pointerY = 0.52;
+    let targetSlice = 0.5;
+    let currentSlice = 0.5;
+    let particles = [];
+    let traces = [];
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createField();
+    }
+
+    function createField() {
+      particles = [];
+      traces = [];
+
+      const count = width < 700 ? 80 : 180;
+
+      for (let i = 0; i < count; i++) {
+        const side = i % 2 === 0 ? "past" : "future";
+        particles.push({
+          side,
+          x: side === "past"
+            ? Math.random() * width * 0.48
+            : width * 0.52 + Math.random() * width * 0.48,
+          y: height * 0.36 + Math.random() * height * 0.34,
+          size: side === "past" ? Math.random() * 1.4 + 0.2 : Math.random() * 2.2 + 0.4,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.08,
+          alpha: side === "past" ? Math.random() * 0.18 + 0.04 : Math.random() * 0.24 + 0.04
+        });
+      }
+
+      const traceCount = width < 700 ? 34 : 72;
+
+      for (let i = 0; i < traceCount; i++) {
+        const y = height * 0.39 + Math.random() * height * 0.22;
+        const length = width * (0.18 + Math.random() * 0.3);
+        traces.push({
+          x: Math.random() * width * 0.44,
+          y,
+          length,
+          wobble: Math.random() * 18 + 4,
+          alpha: Math.random() * 0.16 + 0.035
+        });
+      }
+    }
+
+    function drawPast() {
+      ctx.save();
+
+      traces.forEach((t, idx) => {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(244,241,234,${t.alpha})`;
+        ctx.lineWidth = idx % 9 === 0 ? 0.9 : 0.45;
+
+        const steps = 18;
+        for (let i = 0; i <= steps; i++) {
+          const x = t.x + (t.length / steps) * i;
+          const wave = Math.sin(i * 0.9 + performance.now() * 0.00025 + idx) * t.wobble;
+          const y = t.y + wave * 0.18 + (Math.random() - 0.5) * 0.18;
+
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+
+        ctx.stroke();
+      });
+
+      particles
+        .filter(p => p.side === "past")
+        .forEach(p => {
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(244,241,234,${p.alpha})`;
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+      ctx.restore();
+    }
+
+    function drawFuture() {
+      ctx.save();
+
+      const grid = width < 700 ? 18 : 23;
+      const startX = currentSlice * width + 8;
+      const endX = width - 24;
+      const startY = height * 0.36;
+      const endY = height * 0.66;
+
+      for (let x = startX; x < endX; x += grid) {
+        for (let y = startY; y < endY; y += grid) {
+          const dist = Math.abs(y - pointerY * height) + Math.abs(x - pointerX * width);
+          const chance = Math.max(0.03, 0.22 - dist / 2400);
+
+          if (Math.random() < chance) {
+            ctx.fillStyle = `rgba(244,241,234,${0.035 + Math.random() * 0.16})`;
+            const s = Math.random() > 0.78 ? 2.2 : 1.1;
+            ctx.fillRect(x, y, s, s);
+          }
+        }
+      }
+
+      particles
+        .filter(p => p.side === "future")
+        .forEach(p => {
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(244,241,234,${p.alpha})`;
+          ctx.rect(p.x, p.y, p.size, p.size);
+          ctx.fill();
+        });
+
+      ctx.beginPath();
+      ctx.strokeStyle = "rgba(244,241,234,0.28)";
+      ctx.lineWidth = 0.7;
+
+      const nodes = 18;
+      for (let i = 0; i < nodes; i++) {
+        const x = currentSlice * width + width * 0.14 + i * (width * 0.028);
+        const y = height * 0.51 + Math.sin(i * 0.95 + performance.now() * 0.0009) * 32;
+
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+
+        if (i % 3 === 0) {
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 18, y + (Math.random() - 0.5) * 30);
+        }
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function update() {
+      currentSlice += (targetSlice - currentSlice) * 0.045;
+
+      slice.style.left = `${currentSlice * 100}%`;
+      dot.style.left = `${currentSlice * 100}%`;
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.side === "past" && (p.x < 0 || p.x > width * 0.5)) p.vx *= -1;
+        if (p.side === "future" && (p.x < width * 0.5 || p.x > width)) p.vx *= -1;
+        if (p.y < height * 0.28 || p.y > height * 0.72) p.vy *= -1;
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+
+      drawPast();
+      drawFuture();
+
+      ctx.beginPath();
+      ctx.strokeStyle = "rgba(244,241,234,0.26)";
+      ctx.lineWidth = 0.7;
+      ctx.moveTo(width * 0.04, height * 0.52);
+      ctx.lineTo(width * 0.96, height * 0.52);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function animate() {
+      update();
+      draw();
+      requestAnimationFrame(animate);
+    }
+
+    function setPointer(clientX, clientY) {
+      pointerX = clientX / width;
+      pointerY = clientY / height;
+
+      if (width > 900) {
+        targetSlice = 0.5 + (pointerX - 0.5) * 0.08;
+      } else {
+        targetSlice = 0.5;
+      }
+    }
+
+    window.addEventListener("resize", resize);
+
+    window.addEventListener("mousemove", event => {
+      setPointer(event.clientX, event.clientY);
+    });
+
+    window.addEventListener("touchmove", event => {
+      if (!event.touches || event.touches.length === 0) return;
+      const touch = event.touches[0];
+      setPointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    document.addEventListener("dragstart", event => event.preventDefault());
+
+    resize();
+    animate();
+  </script>
 </body>
 </html>
