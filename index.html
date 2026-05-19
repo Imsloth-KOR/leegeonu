@@ -4,18 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Leegeonu — Current Slice</title>
-  <meta name="description" content="Portfolio and archive by Leegeonu. A study of time, analogue traces, and digital possibilities.">
+  <meta name="description" content="Portfolio and archive by Leegeonu. Past as analogue traces, future as digital possibilities.">
 
   <style>
     :root {
-      --bg: #090a0b;
+      --bg: #080909;
       --text: #f4f1ea;
-      --muted: rgba(244, 241, 234, 0.58);
+      --muted: rgba(244, 241, 234, 0.62);
       --faint: rgba(244, 241, 234, 0.18);
-      --line: rgba(244, 241, 234, 0.32);
-      --bright: rgba(244, 241, 234, 0.92);
-      --side: clamp(24px, 4vw, 56px);
-      --serif: "Times New Roman", Times, serif;
+      --line: rgba(244, 241, 234, 0.34);
+      --bright: rgba(244, 241, 234, 0.94);
+      --side: clamp(28px, 3.8vw, 56px);
       --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
@@ -32,9 +31,6 @@
       color: var(--text);
       font-family: var(--sans);
       overflow: hidden;
-    }
-
-    body {
       user-select: none;
       -webkit-user-select: none;
     }
@@ -51,10 +47,10 @@
       min-height: 680px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.09), transparent 18%),
-        radial-gradient(circle at 22% 58%, rgba(255, 255, 255, 0.045), transparent 26%),
-        radial-gradient(circle at 78% 52%, rgba(255, 255, 255, 0.055), transparent 28%),
-        linear-gradient(90deg, #0a0b0c 0%, #101112 50%, #090a0b 100%);
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 19%),
+        radial-gradient(circle at 28% 50%, rgba(255, 255, 255, 0.045), transparent 34%),
+        radial-gradient(circle at 74% 50%, rgba(255, 255, 255, 0.04), transparent 34%),
+        linear-gradient(90deg, #080909 0%, #111213 50%, #070808 100%);
     }
 
     .page::before {
@@ -62,21 +58,10 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-      background-size: 34px 34px;
       opacity: 0.22;
-      mask-image: radial-gradient(circle at 50% 55%, black 0%, transparent 72%);
-    }
-
-    .page::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
       background:
-        radial-gradient(circle at center, transparent 0%, transparent 56%, rgba(0,0,0,0.42) 100%);
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 52%, rgba(0,0,0,0.48) 100%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 4px);
     }
 
     .site-header {
@@ -92,21 +77,20 @@
     }
 
     .brand {
-      font-size: clamp(18px, 1.6vw, 22px);
-      letter-spacing: -0.01em;
+      font-size: clamp(19px, 1.45vw, 23px);
       font-weight: 500;
+      letter-spacing: -0.02em;
     }
 
     .nav {
       display: flex;
-      align-items: center;
-      gap: clamp(24px, 4vw, 64px);
+      gap: clamp(28px, 4.4vw, 72px);
       font-size: 15px;
+      color: rgba(244, 241, 234, 0.9);
     }
 
     .nav a {
       position: relative;
-      color: rgba(244, 241, 234, 0.88);
     }
 
     .nav a::after {
@@ -127,102 +111,55 @@
       transform-origin: left;
     }
 
-    .time-field {
+    .scene {
       position: absolute;
       inset: 0;
       z-index: 2;
     }
 
-    canvas {
+    .desktop-art,
+    .mobile-art {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       display: block;
-      pointer-events: none;
     }
 
-    .current-slice {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      z-index: 4;
-      width: 1px;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(244,241,234,0.16) 16%,
-        rgba(244,241,234,0.48) 43%,
-        rgba(244,241,234,0.92) 51%,
-        rgba(244,241,234,0.36) 62%,
-        transparent 100%
-      );
-      transform: translateX(-50%);
-      transition: left 500ms ease-out;
+    .mobile-art {
+      display: none;
     }
 
-    .current-dot {
+    .label-block {
       position: absolute;
-      left: 50%;
-      top: 52%;
       z-index: 6;
-      width: 16px;
-      height: 16px;
-      border: 1px solid rgba(244,241,234,0.95);
-      border-radius: 50%;
-      background: rgba(9,10,11,0.92);
-      box-shadow:
-        0 0 18px rgba(244,241,234,0.28),
-        0 0 42px rgba(244,241,234,0.18);
-      transform: translate(-50%, -50%);
-      transition: left 500ms ease-out;
-    }
-
-    .current-dot::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(244,241,234,0.8);
-      transform: translate(-50%, -50%);
-    }
-
-    .past-copy,
-    .future-copy,
-    .now-copy {
-      position: absolute;
-      z-index: 7;
       pointer-events: none;
     }
 
-    .past-copy {
-      left: 16%;
-      top: 25%;
+    .past {
+      left: 17.3%;
+      top: 24.6%;
     }
 
-    .future-copy {
-      right: 16%;
-      top: 25%;
+    .future {
+      right: 15.5%;
+      top: 24.6%;
       text-align: right;
     }
 
-    .now-copy {
+    .now {
       left: 50%;
-      top: 71%;
+      top: 69%;
       text-align: center;
       transform: translateX(-50%);
     }
 
     .label {
       margin: 0 0 12px;
-      font-size: 17px;
+      color: var(--bright);
+      font-size: 18px;
       letter-spacing: 0.34em;
       font-weight: 400;
-      color: var(--bright);
     }
 
     .sub {
@@ -232,7 +169,7 @@
       line-height: 1.55;
     }
 
-    .site-footer {
+    .footer {
       position: absolute;
       left: var(--side);
       right: var(--side);
@@ -258,84 +195,133 @@
       justify-self: end;
     }
 
-    .mobile-hint {
-      display: none;
+    svg {
+      shape-rendering: geometricPrecision;
+    }
+
+    .glow {
+      animation: softPulse 4.2s ease-in-out infinite;
+    }
+
+    .digital-dot {
+      animation: digitalFlicker 5.8s ease-in-out infinite;
+    }
+
+    .digital-dot:nth-child(3n) {
+      animation-delay: 1.4s;
+    }
+
+    .digital-dot:nth-child(4n) {
+      animation-delay: 2.2s;
+    }
+
+    .analog-line {
+      animation: analogDrift 7s ease-in-out infinite;
+    }
+
+    .analog-line:nth-child(odd) {
+      animation-delay: 1.7s;
+    }
+
+    @keyframes softPulse {
+      0%, 100% {
+        opacity: 0.72;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes digitalFlicker {
+      0%, 100% {
+        opacity: 0.18;
+      }
+      50% {
+        opacity: 0.62;
+      }
+    }
+
+    @keyframes analogDrift {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(2px);
+      }
     }
 
     @media (max-width: 900px) {
       html,
       body {
-        overflow: auto;
+        overflow: hidden;
       }
 
       .page {
-        min-height: 100svh;
         height: 100svh;
+        min-height: 100svh;
       }
 
       .site-header {
-        top: 26px;
-        left: 24px;
-        right: 24px;
-        align-items: flex-start;
-        gap: 18px;
+        top: 30px;
+        left: 28px;
+        right: 28px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 22px;
       }
 
       .brand {
-        font-size: 18px;
+        font-size: 28px;
       }
 
       .nav {
-        gap: 18px;
-        font-size: 13px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        width: 100%;
+        justify-content: space-between;
+        gap: 0;
+        font-size: 15px;
       }
 
-      .current-slice {
-        left: 50%;
-        top: 18%;
-        bottom: 18%;
-        opacity: 0.9;
+      .desktop-art {
+        display: none;
       }
 
-      .current-dot {
-        left: 50%;
-        top: 50%;
+      .mobile-art {
+        display: block;
       }
 
-      .past-copy {
-        left: 24px;
-        top: 22%;
+      .past {
+        left: 28px;
+        top: 20.5%;
       }
 
-      .future-copy {
-        right: 24px;
+      .future {
+        right: 28px;
         top: auto;
-        bottom: 23%;
+        bottom: 26%;
       }
 
-      .now-copy {
-        top: 50%;
-        transform: translate(-50%, -50%);
+      .now {
+        top: 52%;
       }
 
       .label {
-        font-size: 14px;
-        letter-spacing: 0.28em;
+        font-size: 15px;
+        letter-spacing: 0.34em;
       }
 
       .sub {
-        font-size: 12px;
+        font-size: 13px;
       }
 
-      .site-footer {
-        left: 24px;
-        right: 24px;
-        bottom: 22px;
+      .footer {
+        left: 28px;
+        right: 28px;
+        bottom: 30px;
+        display: grid;
         grid-template-columns: 1fr;
-        gap: 8px;
-        font-size: 11.5px;
+        gap: 14px;
+        font-size: 12.5px;
+        line-height: 1.45;
       }
 
       .footer-left,
@@ -345,40 +331,37 @@
       }
 
       .footer-center {
-        display: none;
-      }
-
-      .mobile-hint {
         display: block;
         color: rgba(244,241,234,0.42);
-        font-size: 11px;
-        margin-top: 10px;
       }
     }
 
     @media (max-width: 520px) {
+      .brand {
+        font-size: 26px;
+      }
+
       .nav {
-        gap: 14px;
-        font-size: 12px;
+        font-size: 14px;
       }
 
-      .past-copy {
-        top: 24%;
+      .past {
+        top: 22%;
       }
 
-      .future-copy {
-        bottom: 25%;
+      .future {
+        bottom: 25.5%;
       }
 
-      .now-copy {
-        top: 51%;
+      .footer {
+        bottom: 28px;
       }
     }
   </style>
 </head>
 
 <body oncontextmenu="return false;">
-  <div class="page" id="page">
+  <div class="page">
     <header class="site-header">
       <a class="brand" href="index.html">Leegeonu</a>
 
@@ -390,30 +373,209 @@
       </nav>
     </header>
 
-    <main class="time-field" aria-label="Interactive time field">
-      <canvas id="fieldCanvas"></canvas>
+    <main class="scene" aria-label="Current Slice interface">
+      <!-- Desktop artwork -->
+      <svg class="desktop-art" viewBox="0 0 1600 960" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="centerGlow" cx="50%" cy="50%" r="44%">
+            <stop offset="0%" stop-color="rgba(244,241,234,0.72)" />
+            <stop offset="14%" stop-color="rgba(244,241,234,0.16)" />
+            <stop offset="100%" stop-color="rgba(244,241,234,0)" />
+          </radialGradient>
 
-      <div class="current-slice" id="slice"></div>
-      <div class="current-dot" id="dot"></div>
+          <linearGradient id="sliceLine" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(244,241,234,0)" />
+            <stop offset="23%" stop-color="rgba(244,241,234,0.28)" />
+            <stop offset="50%" stop-color="rgba(244,241,234,0.88)" />
+            <stop offset="77%" stop-color="rgba(244,241,234,0.24)" />
+            <stop offset="100%" stop-color="rgba(244,241,234,0)" />
+          </linearGradient>
 
-      <section class="past-copy" aria-label="Past">
+          <linearGradient id="horizontalFade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(244,241,234,0)" />
+            <stop offset="48%" stop-color="rgba(244,241,234,0.45)" />
+            <stop offset="52%" stop-color="rgba(244,241,234,0.45)" />
+            <stop offset="100%" stop-color="rgba(244,241,234,0)" />
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="1600" height="960" fill="transparent" />
+        <circle class="glow" cx="800" cy="492" r="190" fill="url(#centerGlow)" opacity="0.56" />
+
+        <!-- Current slice -->
+        <line x1="800" y1="0" x2="800" y2="382" stroke="url(#sliceLine)" stroke-width="1.15" />
+        <line x1="800" y1="610" x2="800" y2="920" stroke="url(#sliceLine)" stroke-width="1.15" />
+        <line x1="36" y1="492" x2="1564" y2="492" stroke="url(#horizontalFade)" stroke-width="0.72" opacity="0.7" />
+
+        <!-- Analog traces -->
+        <g stroke="rgba(244,241,234,0.34)" stroke-width="0.72" fill="none" opacity="0.82">
+          <path class="analog-line" d="M0 446 C120 437, 188 469, 294 444 S485 422, 628 448 S745 476, 803 446" />
+          <path class="analog-line" d="M0 464 C154 444, 244 474, 372 458 S542 445, 655 464 S750 489, 802 464" />
+          <path class="analog-line" d="M0 482 C108 487, 215 472, 319 484 S505 504, 618 483 S735 462, 802 484" />
+          <path class="analog-line" d="M0 502 C128 517, 260 494, 382 508 S570 529, 690 504 S760 484, 802 504" />
+          <path class="analog-line" d="M0 522 C170 501, 264 534, 424 515 S610 506, 720 524 S770 538, 802 522" />
+          <path class="analog-line" d="M0 544 C124 554, 234 538, 355 552 S540 574, 667 548 S756 531, 802 548" />
+          <path class="analog-line" d="M0 566 C126 548, 238 584, 368 562 S560 545, 706 568 S770 596, 802 570" />
+        </g>
+
+        <g stroke="rgba(244,241,234,0.18)" stroke-width="0.52" fill="none">
+          <path d="M0 410 C95 406, 155 423, 238 414 S402 390, 524 410 S702 434, 800 409" />
+          <path d="M0 594 C116 610, 230 590, 347 602 S537 620, 676 592 S760 581, 800 596" />
+          <path d="M0 621 C146 598, 302 630, 440 612 S650 591, 800 622" />
+        </g>
+
+        <g fill="rgba(244,241,234,0.54)" opacity="0.8">
+          <circle cx="266" cy="468" r="1.3"/>
+          <circle cx="338" cy="525" r="1.1"/>
+          <circle cx="486" cy="458" r="1"/>
+          <circle cx="620" cy="542" r="1.4"/>
+          <circle cx="712" cy="488" r="1.1"/>
+          <circle cx="766" cy="503" r="1.6"/>
+        </g>
+
+        <!-- Digital field -->
+        <g fill="rgba(244,241,234,0.18)">
+          <script type="application/ecmascript"><![CDATA[]]></script>
+        </g>
+
+        <!-- Manually arranged digital dots -->
+        <g>
+          <rect class="digital-dot" x="825" y="394" width="3" height="3" fill="rgba(244,241,234,0.28)" />
+          <rect class="digital-dot" x="852" y="414" width="4" height="4" fill="rgba(244,241,234,0.38)" />
+          <rect class="digital-dot" x="878" y="450" width="3" height="3" fill="rgba(244,241,234,0.36)" />
+          <rect class="digital-dot" x="904" y="492" width="5" height="5" fill="rgba(244,241,234,0.85)" />
+          <rect class="digital-dot" x="930" y="506" width="3" height="3" fill="rgba(244,241,234,0.44)" />
+          <rect class="digital-dot" x="958" y="462" width="4" height="4" fill="rgba(244,241,234,0.42)" />
+          <rect class="digital-dot" x="986" y="438" width="3" height="3" fill="rgba(244,241,234,0.25)" />
+          <rect class="digital-dot" x="1012" y="492" width="5" height="5" fill="rgba(244,241,234,0.75)" />
+          <rect class="digital-dot" x="1040" y="530" width="3" height="3" fill="rgba(244,241,234,0.36)" />
+          <rect class="digital-dot" x="1068" y="504" width="4" height="4" fill="rgba(244,241,234,0.54)" />
+          <rect class="digital-dot" x="1096" y="470" width="3" height="3" fill="rgba(244,241,234,0.42)" />
+          <rect class="digital-dot" x="1124" y="492" width="5" height="5" fill="rgba(244,241,234,0.8)" />
+          <rect class="digital-dot" x="1152" y="522" width="3" height="3" fill="rgba(244,241,234,0.34)" />
+          <rect class="digital-dot" x="1180" y="444" width="4" height="4" fill="rgba(244,241,234,0.52)" />
+          <rect class="digital-dot" x="1208" y="492" width="5" height="5" fill="rgba(244,241,234,0.72)" />
+          <rect class="digital-dot" x="1238" y="510" width="3" height="3" fill="rgba(244,241,234,0.38)" />
+          <rect class="digital-dot" x="1266" y="458" width="4" height="4" fill="rgba(244,241,234,0.45)" />
+          <rect class="digital-dot" x="1296" y="492" width="3" height="3" fill="rgba(244,241,234,0.34)" />
+          <rect class="digital-dot" x="1324" y="474" width="4" height="4" fill="rgba(244,241,234,0.5)" />
+          <rect class="digital-dot" x="1352" y="502" width="3" height="3" fill="rgba(244,241,234,0.38)" />
+          <rect class="digital-dot" x="1380" y="492" width="4" height="4" fill="rgba(244,241,234,0.45)" />
+        </g>
+
+        <g fill="rgba(244,241,234,0.10)">
+          <rect x="820" y="350" width="2" height="2"/>
+          <rect x="848" y="366" width="2" height="2"/>
+          <rect x="884" y="380" width="2" height="2"/>
+          <rect x="916" y="366" width="2" height="2"/>
+          <rect x="950" y="390" width="2" height="2"/>
+          <rect x="984" y="372" width="2" height="2"/>
+          <rect x="1020" y="402" width="2" height="2"/>
+          <rect x="1054" y="374" width="2" height="2"/>
+          <rect x="1090" y="402" width="2" height="2"/>
+          <rect x="1130" y="384" width="2" height="2"/>
+          <rect x="1170" y="404" width="2" height="2"/>
+          <rect x="1210" y="384" width="2" height="2"/>
+          <rect x="1250" y="410" width="2" height="2"/>
+          <rect x="1290" y="392" width="2" height="2"/>
+          <rect x="1330" y="416" width="2" height="2"/>
+          <rect x="1370" y="400" width="2" height="2"/>
+          <rect x="1410" y="430" width="2" height="2"/>
+          <rect x="1450" y="410" width="2" height="2"/>
+          <rect x="1490" y="444" width="2" height="2"/>
+        </g>
+
+        <g stroke="rgba(244,241,234,0.42)" stroke-width="0.85" fill="none">
+          <polyline points="1002,500 1074,470 1135,488 1195,450 1265,448 1325,486 1382,455" />
+          <polyline points="1014,546 1084,526 1155,552 1235,512 1312,516 1375,492" />
+          <polyline points="982,492 1044,492 1104,492 1164,492 1224,492 1284,492 1344,492" opacity="0.55" />
+        </g>
+
+        <!-- Center dot -->
+        <circle class="glow" cx="800" cy="492" r="17" fill="rgba(244,241,234,0.12)" />
+        <circle cx="800" cy="492" r="9" fill="#090a0b" stroke="rgba(244,241,234,0.95)" stroke-width="1.4" />
+        <circle cx="800" cy="492" r="3" fill="rgba(244,241,234,0.9)" />
+      </svg>
+
+      <!-- Mobile artwork -->
+      <svg class="mobile-art" viewBox="0 0 430 932" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="mobileSlice" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(244,241,234,0)" />
+            <stop offset="18%" stop-color="rgba(244,241,234,0.28)" />
+            <stop offset="50%" stop-color="rgba(244,241,234,0.8)" />
+            <stop offset="82%" stop-color="rgba(244,241,234,0.24)" />
+            <stop offset="100%" stop-color="rgba(244,241,234,0)" />
+          </linearGradient>
+
+          <radialGradient id="mobileGlow" cx="50%" cy="50%" r="44%">
+            <stop offset="0%" stop-color="rgba(244,241,234,0.6)" />
+            <stop offset="20%" stop-color="rgba(244,241,234,0.14)" />
+            <stop offset="100%" stop-color="rgba(244,241,234,0)" />
+          </radialGradient>
+        </defs>
+
+        <circle cx="215" cy="458" r="128" fill="url(#mobileGlow)" opacity="0.52" />
+        <line x1="215" y1="150" x2="215" y2="760" stroke="url(#mobileSlice)" stroke-width="1" />
+        <line x1="26" y1="458" x2="404" y2="458" stroke="rgba(244,241,234,0.18)" stroke-width="0.7" />
+
+        <g stroke="rgba(244,241,234,0.30)" stroke-width="0.65" fill="none">
+          <path class="analog-line" d="M0 365 C56 350, 96 385, 152 368 S208 350, 216 372" />
+          <path class="analog-line" d="M0 392 C72 374, 108 406, 162 390 S206 382, 216 396" />
+          <path class="analog-line" d="M0 420 C76 434, 114 406, 164 424 S204 446, 216 426" />
+          <path class="analog-line" d="M0 450 C64 438, 114 456, 162 448 S204 438, 216 452" />
+          <path class="analog-line" d="M0 482 C60 492, 116 472, 164 488 S204 506, 216 490" />
+          <path class="analog-line" d="M0 512 C72 498, 124 528, 172 514 S204 502, 216 518" />
+        </g>
+
+        <g fill="rgba(244,241,234,0.36)">
+          <circle cx="24" cy="382" r="1.3"/>
+          <circle cx="72" cy="438" r="1.2"/>
+          <circle cx="132" cy="404" r="1.1"/>
+          <circle cx="184" cy="498" r="1.3"/>
+        </g>
+
+        <g>
+          <rect class="digital-dot" x="232" y="384" width="3" height="3" fill="rgba(244,241,234,0.22)" />
+          <rect class="digital-dot" x="252" y="402" width="3" height="3" fill="rgba(244,241,234,0.34)" />
+          <rect class="digital-dot" x="274" y="426" width="4" height="4" fill="rgba(244,241,234,0.56)" />
+          <rect class="digital-dot" x="300" y="456" width="4" height="4" fill="rgba(244,241,234,0.74)" />
+          <rect class="digital-dot" x="330" y="438" width="3" height="3" fill="rgba(244,241,234,0.34)" />
+          <rect class="digital-dot" x="356" y="480" width="4" height="4" fill="rgba(244,241,234,0.48)" />
+          <rect class="digital-dot" x="382" y="458" width="3" height="3" fill="rgba(244,241,234,0.36)" />
+          <rect class="digital-dot" x="244" y="512" width="3" height="3" fill="rgba(244,241,234,0.22)" />
+          <rect class="digital-dot" x="274" y="534" width="4" height="4" fill="rgba(244,241,234,0.46)" />
+          <rect class="digital-dot" x="314" y="506" width="3" height="3" fill="rgba(244,241,234,0.32)" />
+          <rect class="digital-dot" x="354" y="542" width="3" height="3" fill="rgba(244,241,234,0.30)" />
+        </g>
+
+        <g stroke="rgba(244,241,234,0.42)" stroke-width="0.75" fill="none">
+          <polyline points="246,458 284,432 322,456 360,424 404,448" />
+          <polyline points="238,512 282,496 318,524 356,500 410,522" />
+        </g>
+
+        <circle class="glow" cx="215" cy="458" r="17" fill="rgba(244,241,234,0.12)" />
+        <circle cx="215" cy="458" r="9" fill="#090a0b" stroke="rgba(244,241,234,0.95)" stroke-width="1.4" />
+        <circle cx="215" cy="458" r="3" fill="rgba(244,241,234,0.9)" />
+      </svg>
+
+      <section class="label-block past" aria-label="Past">
         <h1 class="label">PAST</h1>
         <p class="sub">analogue<br>accumulated time</p>
       </section>
 
-      <section class="future-copy" aria-label="Future">
+      <section class="label-block future" aria-label="Future">
         <h2 class="label">FUTURE</h2>
         <p class="sub">digital<br>possible futures</p>
       </section>
 
-      <section class="now-copy" aria-label="Now">
+      <section class="label-block now" aria-label="Now">
         <h2 class="label">NOW</h2>
         <p class="sub">current slice</p>
-        <p class="mobile-hint">scroll of time / touch of possibility</p>
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="footer">
       <span class="footer-left">© 2016–Current. Geonu Lee. All rights reserved.</span>
       <span class="footer-center">DnA — Digital and Analogue</span>
       <span class="footer-right">Portfolio and archive by Leegeonu.</span>
@@ -421,226 +583,27 @@
   </div>
 
   <script>
-    const canvas = document.getElementById("fieldCanvas");
-    const ctx = canvas.getContext("2d");
-    const page = document.getElementById("page");
-    const slice = document.getElementById("slice");
-    const dot = document.getElementById("dot");
-
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
-    let pointerX = 0.5;
-    let pointerY = 0.52;
-    let targetSlice = 0.5;
-    let currentSlice = 0.5;
-    let particles = [];
-    let traces = [];
-
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
-
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      createField();
-    }
-
-    function createField() {
-      particles = [];
-      traces = [];
-
-      const count = width < 700 ? 80 : 180;
-
-      for (let i = 0; i < count; i++) {
-        const side = i % 2 === 0 ? "past" : "future";
-        particles.push({
-          side,
-          x: side === "past"
-            ? Math.random() * width * 0.48
-            : width * 0.52 + Math.random() * width * 0.48,
-          y: height * 0.36 + Math.random() * height * 0.34,
-          size: side === "past" ? Math.random() * 1.4 + 0.2 : Math.random() * 2.2 + 0.4,
-          vx: (Math.random() - 0.5) * 0.12,
-          vy: (Math.random() - 0.5) * 0.08,
-          alpha: side === "past" ? Math.random() * 0.18 + 0.04 : Math.random() * 0.24 + 0.04
-        });
-      }
-
-      const traceCount = width < 700 ? 34 : 72;
-
-      for (let i = 0; i < traceCount; i++) {
-        const y = height * 0.39 + Math.random() * height * 0.22;
-        const length = width * (0.18 + Math.random() * 0.3);
-        traces.push({
-          x: Math.random() * width * 0.44,
-          y,
-          length,
-          wobble: Math.random() * 18 + 4,
-          alpha: Math.random() * 0.16 + 0.035
-        });
-      }
-    }
-
-    function drawPast() {
-      ctx.save();
-
-      traces.forEach((t, idx) => {
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(244,241,234,${t.alpha})`;
-        ctx.lineWidth = idx % 9 === 0 ? 0.9 : 0.45;
-
-        const steps = 18;
-        for (let i = 0; i <= steps; i++) {
-          const x = t.x + (t.length / steps) * i;
-          const wave = Math.sin(i * 0.9 + performance.now() * 0.00025 + idx) * t.wobble;
-          const y = t.y + wave * 0.18 + (Math.random() - 0.5) * 0.18;
-
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-
-        ctx.stroke();
-      });
-
-      particles
-        .filter(p => p.side === "past")
-        .forEach(p => {
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(244,241,234,${p.alpha})`;
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-      ctx.restore();
-    }
-
-    function drawFuture() {
-      ctx.save();
-
-      const grid = width < 700 ? 18 : 23;
-      const startX = currentSlice * width + 8;
-      const endX = width - 24;
-      const startY = height * 0.36;
-      const endY = height * 0.66;
-
-      for (let x = startX; x < endX; x += grid) {
-        for (let y = startY; y < endY; y += grid) {
-          const dist = Math.abs(y - pointerY * height) + Math.abs(x - pointerX * width);
-          const chance = Math.max(0.03, 0.22 - dist / 2400);
-
-          if (Math.random() < chance) {
-            ctx.fillStyle = `rgba(244,241,234,${0.035 + Math.random() * 0.16})`;
-            const s = Math.random() > 0.78 ? 2.2 : 1.1;
-            ctx.fillRect(x, y, s, s);
-          }
-        }
-      }
-
-      particles
-        .filter(p => p.side === "future")
-        .forEach(p => {
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(244,241,234,${p.alpha})`;
-          ctx.rect(p.x, p.y, p.size, p.size);
-          ctx.fill();
-        });
-
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(244,241,234,0.28)";
-      ctx.lineWidth = 0.7;
-
-      const nodes = 18;
-      for (let i = 0; i < nodes; i++) {
-        const x = currentSlice * width + width * 0.14 + i * (width * 0.028);
-        const y = height * 0.51 + Math.sin(i * 0.95 + performance.now() * 0.0009) * 32;
-
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-
-        if (i % 3 === 0) {
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 18, y + (Math.random() - 0.5) * 30);
-        }
-      }
-
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    function update() {
-      currentSlice += (targetSlice - currentSlice) * 0.045;
-
-      slice.style.left = `${currentSlice * 100}%`;
-      dot.style.left = `${currentSlice * 100}%`;
-
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.side === "past" && (p.x < 0 || p.x > width * 0.5)) p.vx *= -1;
-        if (p.side === "future" && (p.x < width * 0.5 || p.x > width)) p.vx *= -1;
-        if (p.y < height * 0.28 || p.y > height * 0.72) p.vy *= -1;
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-
-      ctx.save();
-      ctx.globalCompositeOperation = "screen";
-
-      drawPast();
-      drawFuture();
-
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(244,241,234,0.26)";
-      ctx.lineWidth = 0.7;
-      ctx.moveTo(width * 0.04, height * 0.52);
-      ctx.lineTo(width * 0.96, height * 0.52);
-      ctx.stroke();
-
-      ctx.restore();
-    }
-
-    function animate() {
-      update();
-      draw();
-      requestAnimationFrame(animate);
-    }
-
-    function setPointer(clientX, clientY) {
-      pointerX = clientX / width;
-      pointerY = clientY / height;
-
-      if (width > 900) {
-        targetSlice = 0.5 + (pointerX - 0.5) * 0.08;
-      } else {
-        targetSlice = 0.5;
-      }
-    }
-
-    window.addEventListener("resize", resize);
-
-    window.addEventListener("mousemove", event => {
-      setPointer(event.clientX, event.clientY);
-    });
-
-    window.addEventListener("touchmove", event => {
-      if (!event.touches || event.touches.length === 0) return;
-      const touch = event.touches[0];
-      setPointer(touch.clientX, touch.clientY);
-    }, { passive: true });
-
     document.addEventListener("dragstart", event => event.preventDefault());
 
-    resize();
-    animate();
+    const page = document.querySelector(".page");
+    const desktop = window.matchMedia("(min-width: 901px)");
+
+    function handleMove(event) {
+      if (!desktop.matches) return;
+
+      const x = event.clientX / window.innerWidth - 0.5;
+      const y = event.clientY / window.innerHeight - 0.5;
+
+      page.style.setProperty("--mx", x);
+      page.style.setProperty("--my", y);
+
+      const art = document.querySelector(".desktop-art");
+      if (art) {
+        art.style.transform = `translate(${x * 8}px, ${y * 5}px)`;
+      }
+    }
+
+    window.addEventListener("mousemove", handleMove);
   </script>
 </body>
 </html>
